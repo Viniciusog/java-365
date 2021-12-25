@@ -1,26 +1,55 @@
 package Ex3;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.Date;
+import java.util.Locale;
+import java.util.Scanner;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ParseException {
+        Locale.setDefault(Locale.US);
+        Scanner te = new Scanner(System.in);
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
+        Order o = new Order();
 
-        Client c = new Client("Fernando", "fernando@gmail.com", Date.from(Instant.parse("1998-01-20T15:42:07Z")));
-        Order order = new Order(OrderStatus.PENDING_PAYMENT, c);
+        System.out.println("Enter client data: ");
+        System.out.println("Name: ");
+        String cName = te.next();
+        System.out.println("E-mail: ");
+        String cEmail = te.next();
+        System.out.println("Birth date: (dd/MM/yyyy)");
+        Date birthDate = sdf.parse(te.next());
 
-        Product p = new Product("Computer", 3000D);
-        Product p2 = new Product("TV", 1000D);
+        Client c = new Client(cName, cEmail, birthDate);
+        o.setClient(c);
 
-        //discount
-        OrderItem oi = new OrderItem(2500D, 2, p);
-        OrderItem oi2 = new OrderItem(1000D, 5, p2);
+        System.out.println("----------ENTER ORDER DATA----------");
+        System.out.println("Status: ");
+        OrderStatus status = OrderStatus.valueOf(te.next());
+        o.setStatus(status);
 
-        order.addItem(oi);
-        order.addItem(oi2);
+        System.out.println("How many items to this order?");
+        int quantityItems = te.nextInt();
 
-        System.out.println(order);
+        for (int i = 0; i < quantityItems; i++) {
+            System.out.println("Enter #" + (i + 1) + " item data");
+            System.out.println("Product name: ");
+            String productName = te.next();
+            System.out.println("Product price: ");
+            Double price = te.nextDouble();
+            System.out.println("Quantity: ");
+            int quantity = te.nextInt();
+
+            Product p = new Product(productName, price);
+            OrderItem item = new OrderItem(price, quantity, p);
+
+            o.addItem(item);
+        }
+
+        System.out.println(o);
     }
 }

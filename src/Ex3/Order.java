@@ -37,6 +37,14 @@ public class Order {
         this.items.remove(item);
     }
 
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public Double total() {
         double sum = 0;
         for (OrderItem item : items) {
