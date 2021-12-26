@@ -4,8 +4,8 @@ package Ex7;
 public class SavingsAccountPlus extends SavingsAccount {
 
     // não pode sobreescrever método final definido pela superclasse
-    @Override
+    /*@Override
     public void withdraw(double amount) {
         this.balance -= amount + 2;
-    }
+    }*/
 }
